@@ -2,86 +2,47 @@ import time
 import tkinter as tk
 
 
-############### MAIN ###################
+############### APP ###################
 
 class App:
     def __init__(self, master):
         self.master = master
 
-        main_frame = tk.Frame(master, bg='lightblue')
+        main_frame = tk.Frame(master, bg='grey')
         main_frame.pack(expand=True, fill=tk.BOTH, side=tk.TOP)
 
 
+
+        self.timer_value = tk.StringVar()
+        self.timer_value.set(0)
+
         font=('Calibri', 40)
-        timer_label = tk.Label(main_frame, width=7, height=1, padx=10, pady=10, text='dsfsdfsf', bg='red', font=font)
-        timer_label.pack(pady=30, padx=70, fill=tk.BOTH, side=tk.TOP)
+        timer_label = tk.Label(main_frame, width=7, height=1, padx=10, pady=10, textvariable=self.timer_value, bg='red', font=font)
+        timer_label.pack(pady=30, padx=70, fill=tk.BOTH, expand=True, side=tk.TOP)
+
+
+
 
         middle_frame = tk.Frame(main_frame, height=100, bg='purple')
-        middle_frame.pack(padx=20, side=tk.TOP, fill=tk.BOTH, expand=True)
+        middle_frame.pack(padx=30, side=tk.TOP, fill=tk.BOTH, expand=True)
 
 
-        button_style = {'width':1, 'height':1, 'bg':'grey'}
-        button_config = {'padx':60, 'pady':40, 'side':tk.LEFT, 'fill':tk.BOTH, 'expand':True}
+        button_placement = {'padx':40, 'pady':35, 'side':tk.LEFT, 'fill':tk.BOTH, 'expand':True}
+
+        start_or_stop='Start'
+
+        StartStop_btn = tk.Button(middle_frame, padx=25, pady=10, bg='green', text=start_or_stop, command=StartStop_btn_func)
+        StartStop_btn.pack(button_placement)
+
+        reset_btn = tk.Button(middle_frame, padx=25, pady=10, bg='yellow', text='Reset', command=reset_btn_func)
+        reset_btn.pack(button_placement)
+
+        round_btn = tk.Button(middle_frame, padx=25, pady=10, bg='grey', text='Round', command=round_btn_func)
+        round_btn.pack(button_placement)
 
 
-        left_btn = tk.Button(middle_frame, button_style, text='fsdfs', command=lambda:print('ok'))
-        left_btn.pack(button_config)
-
-        mid_btn = tk.Button(middle_frame, button_style)
-        mid_btn.pack(button_config)
-
-        right_btn = tk.Button(middle_frame, button_style)
-        right_btn.pack(button_config)
-
-
-        bottom_frame = tk.Frame(main_frame, height=100, bg='lightgreen')
-        bottom_frame.pack(padx=20, side=tk.TOP, fill=tk.BOTH, expand=True)
-
-
-
-
-
-
-        # btn_frame = tk.Frame(master, width=500, height=100, bg='purple')
-        # btn_frame.grid(column=1, row=4)
-
-        # left_btn = tk.Button(btn_frame, text='sssdfs')
-        # left_btn.pack(side=tk.LEFT)
-
-        # right_btn = tk.Button(btn_frame, text='dfsf')
-        # right_btn.pack(side=tk.RIGHT)
-
-
-
-        root.mainloop()
-
-
-
-
-    # canvas = tk.Frame(root, width=500, height=400, bg='lightblue')
-    # canvas.grid(columnspan=3, rowspan=3)
-
-    # label = tk.Label(root, text='4hh3242dsa3423')
-    # label.grid(column=1, row=0)
-
-    # btn_frame = tk.Frame(root)
-    # btn_frame.grid(column=1, row=1)
-
-    # ex_btn = tk.Button(btn_frame, text='sdfd', fg='red')
-    # ex_btn.pack(side=tk.LEFT)
-
-    # spacer = tk.Frame(btn_frame, width=20, height=1)
-    # spacer.pack(side=tk.LEFT)
-
-    # other_btn = tk.Button(btn_frame, text='gdfgd', fg='blue')
-    # other_btn.pack(side=tk.RIGHT)
-
-
-
-
-
-
-
+        bottom_frame = tk.Frame(main_frame, height=200, bg='lightgreen')
+        bottom_frame.pack(padx=30, side=tk.TOP, fill=tk.BOTH, expand=True)
 
 
 
@@ -93,6 +54,20 @@ class App:
 
 
 ############### DEF ####################
+
+def StartStop_btn_func():
+    print('startstop')
+    print(app.master.winfo_height())
+    print(app.master.winfo_width())
+
+    app.timer_value.set(10)
+
+def reset_btn_func():
+    print('reset')
+
+
+def round_btn_func():
+    print('round')
 
 
 def time_since_ns(time_start_ns=0):
