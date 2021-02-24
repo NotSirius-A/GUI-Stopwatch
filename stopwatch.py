@@ -77,7 +77,17 @@ class App:
         self.update_timer_job = self.master.after(self.refresh_period_ms, self.update_timer_value_job)
 
         x = self.time_since_ns(self.t_start_ns)
-        self.timer_value.set(x/10e+8)
+        x_formatted = self.format_ns_to_human(x)
+
+        #TODO FIX
+        a = str(x_formatted['hours'])
+        b = str(x_formatted['minutes'])
+        c = str(x_formatted['seconds'])
+        d = str(x_formatted['centyseconds'])
+
+        a, b, c, d = ('00'+a)[-2:], ('00'+b)[-2:], ('00'+c)[-2:], ('00'+d)[-2:]
+
+        self.timer_value.set(f"{a}:{b}:{c}.{d}")
 
 
     def stop_btn_func(self):
@@ -89,11 +99,11 @@ class App:
 
 
     def reset_btn_func(self):
-        self.timer_value.set("0")
+        self.timer_value.set("00:00:00.00")
         
 
     def round_btn_func(self):
-        self.timer_value.set("1111s")
+        self.timer_value.set("sgdgdsdfsdfs")
         print('round')
 
 
@@ -105,30 +115,27 @@ class App:
         rv = time_now - time_start_ns
         return rv
 
+    def format_ns_to_human(self, time_in_ns):
+        human_time = {}
+
+        time_in_s = time_in_ns/1e+9
+
+        human_time['hours'] = int(time_in_s/3600)
+        time_in_s = time_in_s - human_time['hours']*3600
+
+        human_time['minutes'] = int(time_in_s/60)
+        time_in_s = time_in_s - human_time['minutes']*60
+
+        human_time['seconds'] = int((time_in_s))
+        time_in_s = time_in_s - human_time['seconds']
+
+        human_time['centyseconds'] = int(time_in_s*100)
+
+        return human_time
+
+
 
 #######################################
-
-
-# def StartStop_btn_func():
-#     global job1
-#     print('startstop')
-#     print(app.master.winfo_height())
-#     print(app.master.winfo_width())
-
-#     x = time_since_ns(start_time_ns)
-#     app.timer_value.set(x)
-
-#     job1 = app.master.after(500, StartStop_btn_func)
-
-
-# def reset_btn_func():
-#     print('reset')
-#     global job1
-#     app.master.after_cancel(job1)
-
-
-# def round_btn_func():
-#     print('round')
 
 
 
