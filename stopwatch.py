@@ -1,6 +1,7 @@
 import time
 import tkinter as tk
 import tkinter.ttk as ttk
+from PIL import Image, ImageTk
 
 
 ############### APP ###################
@@ -42,7 +43,13 @@ class App:
 
         #### Round textbox setup ####
         round_textframe_style = {'bg':'white'}
-        self.draw_round_textframe_and_logo(bottom_frame, round_textframe_style)
+        self.draw_round_textframe(bottom_frame, round_textframe_style)
+
+        #### Logo setup ####
+        logo_path = 'logo.png'
+        logo_style = {'bg':'blue'}
+        sign_font = ('Calibri', 17)
+        self.draw_logo(bottom_frame, logo_style, logo_path, sign_font)
 
 
 
@@ -144,8 +151,7 @@ class App:
                 i.destroy()
 
         self.round_labels = [0]
-            
-        
+                  
 
     def round_btn_func(self):
         round_time = tk.StringVar()
@@ -160,44 +166,37 @@ class App:
         d = str(x['centyseconds'])
 
         #formatting values to look nicer
+        #BUG it will not show correctly when hours reach 99+, but i dont think its worth fixing
         a, b, c, d = ('00'+a)[-2:], ('00'+b)[-2:], ('00'+c)[-2:], ('00'+d)[-2:]
 
         #theres always a 0 at the start, so its fine
         round_num = len(self.round_labels)
 
-        round_time.set(f"Round {round_num} -> {a}:{b}:{c}.{d}")
+        round_time.set(f"Round {round_num}  --->  {a}:{b}:{c}.{d}")
 
 
         #insert a label into the round_textframe Frame at the bottom
-        #y = tk.Label(self.round_textframe, textvariable=round_time)
-        y = tk.Label(self.round_frame, textvariable=round_time)
-        y.pack(side=tk.TOP)
+        y = tk.Label(self.round_frame, bg='lightgrey', width=25, anchor='w', font=('Calibri', 14), textvariable=round_time)
+        y.pack(pady=(0,4), padx=(3,0), side=tk.TOP, fill=tk.X, expand=True)
 
         self.round_labels.append(y)
 
 
-
-    def draw_round_textframe_and_logo(self, frame, round_textframe_style):
-
-        #TODO CLEAN THIS FUNC
-
-
-
+    def draw_round_textframe(self, frame, round_textframe_style):
         container = ttk.Frame(frame)
         canvas = tk.Canvas(container)
+
         scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+
         self.round_frame = ttk.Frame(canvas)
-
-
         self.round_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 
         canvas.create_window((0, 0), window=self.round_frame, anchor="nw")
-
         canvas.configure(yscrollcommand=scrollbar.set)
 
-        container.pack(padx=40, pady=30, side=tk.LEFT, fill=tk.BOTH, expand=True)
-        canvas.pack(side="left", fill="both", expand=True)
-        scrollbar.pack(side="right", fill="y")
+        container.pack(padx=(40, 10), pady=30, side=tk.LEFT, fill=tk.BOTH, expand=True)
+        canvas.pack(pady=(3,3), side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 
     def time_since_ns(self, time_start_ns=0):
@@ -228,6 +227,28 @@ class App:
         return human_time
 
 
+    def draw_logo(self, frame, img_style, image_path, text_font):
+        logo_frame = tk.Frame(frame, img_style)
+        logo_frame.pack(pady=30, padx=(20, 40), side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        sign_down = tk.Label(logo_frame, img_style, font=text_font, text='NotSirius-A')
+        sign_down.pack(side=tk.BOTTOM, pady=(0, 15))
+
+        sign_up = tk.Label(logo_frame, img_style, font=text_font, text='Made by:')
+        sign_up.pack(side=tk.BOTTOM)
+
+
+        image = Image.open(image_path)
+        image = image.resize((80, 80), Image.ANTIALIAS)
+
+        logo = ImageTk.PhotoImage(image)
+
+        logo_label = tk.Label(logo_frame, img_style, width=150, image=logo)
+        logo_label.image = logo
+
+        logo_label.pack(side=tk.BOTTOM, pady=10)
+
+
 
 #######################################
 
@@ -238,7 +259,7 @@ if __name__ == '__main__':
 
     root.title('Stopwatch')
 
-    root.geometry("750x650")
+    root.geometry("700x650")
 
     app = App(root)
 
