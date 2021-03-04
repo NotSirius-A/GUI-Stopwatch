@@ -4,7 +4,13 @@ import tkinter.ttk as ttk
 from PIL import Image, ImageTk
 
 
+############## NOTES ##################
+
+#ns in var/func name means that its expressed in nanoseconds
+#there's a bug round_btn_func, when timer exceeds 99h
+
 ############### APP ###################
+
 
 class App:
     def __init__(self, master):
@@ -68,7 +74,7 @@ class App:
 
     def draw_buttons(self, frame, button_placement, button_style):
         # button_placement = {'padx':pixels, 'pady':pixels, 'side':tk.LEFT, 'fill':tk.BOTH, 'expand':True}
-        # button_size = {'padx':pixels, 'pady':pixels}
+        # button_size = {'padx':pixels, 'pady':pixels, 'font':('font', size)}
 
 
         self.StartStop_btn = tk.Button(frame, button_style, bg='#00a87a', text='Start', command=self.start_btn_func)
@@ -136,7 +142,7 @@ class App:
         #save the last value 
         self.last_time_value_ns = self.timer_value_ns
 
-        #!!! always makes round appear when stop button is pressed
+        #!!! always makes an extra round appear when stop button is pressed
         self.round_btn_func()
 
 
@@ -169,13 +175,13 @@ class App:
         #BUG it will not show correctly when hours reach 99+, but i dont think its worth fixing
         a, b, c, d = ('00'+a)[-2:], ('00'+b)[-2:], ('00'+c)[-2:], ('00'+d)[-2:]
 
-        #theres always a 0 at the start, so its fine
+        #theres always a 0 at the start, so no need for +1
         round_num = len(self.round_labels)
 
         round_time.set(f"| Round {round_num}    --->    {a}:{b}:{c}.{d}")
 
 
-        #insert a label into the round_textframe Frame at the bottom
+        #insert a label into the round_textframe Frame at the bottom of the list
         y = tk.Label(self.round_frame, bg='#1A1A1A', fg='#E8E8E8', width=25, anchor='w', font=('Segoe UI', 15, 'bold'), textvariable=round_time)
         y.pack(pady=(0,4), padx=(3,0), side=tk.TOP, fill=tk.X, expand=True)
 
@@ -183,6 +189,9 @@ class App:
 
 
     def draw_round_textframe(self, frame, round_textframe_style):
+        #round_textframe_style = {'bg':'color'}
+
+
         style = ttk.Style()
         style.configure("BW.TLabel", background=round_textframe_style['bg'])
 
@@ -203,8 +212,6 @@ class App:
 
 
     def time_since_ns(self, time_start_ns=0):
-        #this func return time in ns
-        #ns means nanoseconds
 
         time_now = time.time_ns()
         rv = time_now - time_start_ns
@@ -231,6 +238,12 @@ class App:
 
 
     def draw_logo(self, frame, img_style, image_path, text_font):
+        #logo_path = 'logo.png'
+        #logo_style = {'bg':'color', 'fg':'color'}
+        #sign_font = ('font', size)
+
+
+
         logo_frame = tk.Frame(frame, bg=img_style['bg'])
         logo_frame.pack(pady=10, padx=(20, 0), side=tk.TOP, fill=tk.BOTH, expand=True)
 
