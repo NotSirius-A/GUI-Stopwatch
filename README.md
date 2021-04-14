@@ -4,7 +4,7 @@
 Stopwatch app written in python with a graphical user interface. 
 
 ## Features
-- GUI will remain its shape after resizing the window
+- Window can be expanded/contrated, with the GUI losing its shape
 - It's able to measure rounds/laps
 - Very many rounds can be created, due to the "round box" being scrollable
 - Stopwatch will resume itself when Start button is pressed again
