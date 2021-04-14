@@ -15,3 +15,6 @@ Stopwatch app written in python with a graphical user interface.
 ## Screenshots
 <img src='https://imgur.com/J9kjREr.png'></img>
 <img src='https://imgur.com/ecPUh3n.png'></img>
+
+## Video demonstration
+https://youtu.be/Q1mt20ac-j0
