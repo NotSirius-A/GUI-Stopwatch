@@ -12,9 +12,9 @@ Stopwatch app written in python with a graphical user interface.
 - Timer has a refresh period of 15 milliseconds, therefore appears to be smooth and continuous. Also, it can easily measure times down to the hundredth of a second
 - Clean and simple dark design
 
+## Video demonstration
+https://youtu.be/Q1mt20ac-j0
+
 ## Screenshots
 <img src='https://imgur.com/J9kjREr.png'></img>
 <img src='https://imgur.com/ecPUh3n.png'></img>
-
-## Video demonstration
-https://youtu.be/Q1mt20ac-j0
